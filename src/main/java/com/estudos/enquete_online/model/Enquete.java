@@ -22,7 +22,6 @@ public class Enquete {
     @Column(nullable = false)
     private LocalDateTime data_criacao;
 
-    @Column(nullable = false)
     private LocalDateTime data_encerramento;
 
     private Boolean ativa;
