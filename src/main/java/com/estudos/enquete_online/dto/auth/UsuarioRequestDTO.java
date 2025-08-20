@@ -1,4 +1,4 @@
-package com.estudos.enquete_online.dto;
+package com.estudos.enquete_online.dto.auth;
 
 import com.estudos.enquete_online.model.RoleEnum;
 import jakarta.validation.constraints.Email;

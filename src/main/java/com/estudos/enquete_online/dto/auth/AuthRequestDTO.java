@@ -1,4 +1,4 @@
-package com.estudos.enquete_online.dto;
+package com.estudos.enquete_online.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

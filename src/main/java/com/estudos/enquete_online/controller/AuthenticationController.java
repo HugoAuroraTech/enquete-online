@@ -2,10 +2,10 @@ package com.estudos.enquete_online.controller;
 
 
 import com.estudos.enquete_online.config.TokenService;
-import com.estudos.enquete_online.dto.AuthRequestDTO;
-import com.estudos.enquete_online.dto.TokenDTO;
-import com.estudos.enquete_online.dto.UsuarioRequestDTO;
-import com.estudos.enquete_online.dto.UsuarioResponseDTO;
+import com.estudos.enquete_online.dto.auth.AuthRequestDTO;
+import com.estudos.enquete_online.dto.auth.TokenDTO;
+import com.estudos.enquete_online.dto.auth.UsuarioRequestDTO;
+import com.estudos.enquete_online.dto.auth.UsuarioResponseDTO;
 import com.estudos.enquete_online.model.Usuario;
 import com.estudos.enquete_online.repository.UsuarioRepository;
 import jakarta.validation.Valid;
