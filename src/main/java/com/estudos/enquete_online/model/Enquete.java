@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "enquetes")
 @Entity
@@ -25,4 +26,7 @@ public class Enquete {
     private LocalDateTime data_encerramento;
 
     private Boolean ativa;
+
+    @OneToMany(mappedBy = "enquete", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Opcao> opcoes;
 }

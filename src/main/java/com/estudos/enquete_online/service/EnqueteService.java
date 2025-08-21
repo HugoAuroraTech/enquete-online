@@ -4,6 +4,7 @@ package com.estudos.enquete_online.service;
 import com.estudos.enquete_online.dto.enquete.EnqueteRequestDTO;
 import com.estudos.enquete_online.dto.enquete.EnqueteResponseDTO;
 import com.estudos.enquete_online.dto.enquete.OpcaoRequestDTO;
+import com.estudos.enquete_online.dto.enquete.OpcaoResponseDTO;
 import com.estudos.enquete_online.model.Enquete;
 import com.estudos.enquete_online.model.Opcao;
 import com.estudos.enquete_online.repository.EnqueteRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EnqueteService {
@@ -51,5 +53,23 @@ public class EnqueteService {
         List<EnqueteResponseDTO> enqueteResponseDTOS = enquetes.stream().map(EnqueteResponseDTO::fromEntity).toList();
 
         return enqueteResponseDTOS;
+    }
+
+    public EnqueteResponseDTO buscarEnquetePorId(Long id) {
+        Enquete enquete = enqueteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Enquete não encontrada"));
+
+        return new EnqueteResponseDTO(
+                enquete.getId(),
+                enquete.getTitulo(),
+                enquete.getDescricao(),
+                enquete.getData_criacao(),
+                enquete.getData_encerramento(),
+                enquete.getAtiva(),
+                enquete.getOpcoes().stream()
+                        .map(OpcaoResponseDTO::fromEntity)
+                        .collect(Collectors.toList())
+        );
+
     }
 }

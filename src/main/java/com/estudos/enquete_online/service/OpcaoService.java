@@ -26,6 +26,11 @@ public class OpcaoService {
                 })
                 .toList();
 
-        return opcaoRepository.saveAll(opcoes);
+        var opcoesSalvas =  opcaoRepository.saveAll(opcoes);
+        return opcoesSalvas;
+    }
+
+    public List<Opcao> buscarOpcoes(){
+        return opcaoRepository.findAll();
     }
 }
