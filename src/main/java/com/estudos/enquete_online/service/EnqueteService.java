@@ -1,10 +1,7 @@
 package com.estudos.enquete_online.service;
 
 
-import com.estudos.enquete_online.dto.enquete.EnqueteRequestDTO;
-import com.estudos.enquete_online.dto.enquete.EnqueteResponseDTO;
-import com.estudos.enquete_online.dto.enquete.OpcaoRequestDTO;
-import com.estudos.enquete_online.dto.enquete.OpcaoResponseDTO;
+import com.estudos.enquete_online.dto.enquete.*;
 import com.estudos.enquete_online.model.Enquete;
 import com.estudos.enquete_online.model.Opcao;
 import com.estudos.enquete_online.repository.EnqueteRepository;
@@ -25,6 +22,8 @@ public class EnqueteService {
     private EnqueteRepository enqueteRepository;
     @Autowired
     private OpcaoService opcaoService;
+    @Autowired
+    private OpcaoRepository opcaoRepository;
 
     @Transactional
     public EnqueteResponseDTO criar(EnqueteRequestDTO requestDTO){
@@ -71,5 +70,19 @@ public class EnqueteService {
                         .collect(Collectors.toList())
         );
 
+    }
+
+
+    public ResultadoEnqueteDTO getResultados(Long enqueteId) {
+        var enquete = enqueteRepository.findById(enqueteId)
+                .orElseThrow(() -> new RuntimeException("Enquete não encontrada"));
+
+        var resultados = opcaoRepository.getResultadosPorEnquete(enqueteId);
+
+        return new ResultadoEnqueteDTO(
+                enquete.getId(),
+                enquete.getTitulo(),
+                resultados
+        );
     }
 }

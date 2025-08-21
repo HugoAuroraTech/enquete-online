@@ -26,17 +26,29 @@ public class VotoService {
     @Autowired
     private OpcaoRepository opcaoRepository;
 
-    public String criarVoto(Long enqueteId, Long opcaoId){
-        var enquete = enqueteRepository.findById(enqueteId).orElseThrow(() -> new RuntimeException("Enquete não encontrada com ID: " + enqueteId));
-        var opcao = opcaoRepository.findById(opcaoId).orElseThrow(() -> new RuntimeException("Opcao não encontrada com ID: " + opcaoId));
+    public String criarVoto(Long enqueteId, Long opcaoId) {
+        var enquete = enqueteRepository.findById(enqueteId)
+                .orElseThrow(() -> new RuntimeException("Enquete não encontrada com ID: " + enqueteId));
+
+        var opcao = opcaoRepository.findById(opcaoId)
+                .orElseThrow(() -> new RuntimeException("Opção não encontrada com ID: " + opcaoId));
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuario = (Usuario) authentication.getPrincipal();
+
+        boolean jaVotou = votoRepository.existsByUsuarioIdAndEnqueteId(usuario.getId(), enquete.getId());
+        if (jaVotou) {
+            throw new RuntimeException("Você já votou nesta enquete.");
+        }
+
         Voto voto = new Voto();
         voto.setUsuario(usuario);
         voto.setEnquete(enquete);
         voto.setOpcao(opcao);
         voto.setData_voto(LocalDateTime.now());
-        Voto votoSalvo = votoRepository.save(voto);
+
+        votoRepository.save(voto);
+
         return "Obrigado por votar na enquete: " + enquete.getId();
     }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface VotoRepository extends JpaRepository<Voto, Long> {
     List<Voto> findByEnqueteId(Long id);
+    boolean existsByUsuarioIdAndEnqueteId(Long usuarioId, Long enqueteId);
 }
